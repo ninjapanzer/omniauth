@@ -16,7 +16,6 @@ module OmniAuth
   autoload :AuthHash, 'omniauth/auth_hash'
   autoload :FailureEndpoint, 'omniauth/failure_endpoint'
   autoload :SessionStore, 'omniauth/session_store'
-  autoload :RedisStore, 'omniauth/redis_store'
 
   def self.strategies
     @strategies ||= []
