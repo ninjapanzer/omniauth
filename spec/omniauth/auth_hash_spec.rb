@@ -1,5 +1,4 @@
 require 'helper'
-require 'pry'
 
 describe OmniAuth::AuthHash do
   subject { OmniAuth::AuthHash.new }
@@ -86,7 +85,6 @@ describe OmniAuth::AuthHash do
     end
 
     it 'converts an info hash as well' do
-      binding.pry
       subject.info = {:first_name => 'Example', :last_name => 'User'}
       expect(subject.info.class).to eq(OmniAuth::AuthHash::InfoHash)
       expect(subject.to_hash['info'].class).to eq(::Hash)
