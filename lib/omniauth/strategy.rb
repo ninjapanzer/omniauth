@@ -265,7 +265,7 @@ module OmniAuth
     def mock_request_call
       setup_phase
 
-      session['omniauth.params'] = request.params
+      OmniAuth.config.request_store.new(env)['omniauth.params'] = request.params
       OmniAuth.config.before_request_phase.call(env) if OmniAuth.config.before_request_phase
       if request.params['origin']
         @env['rack.session']['omniauth.origin'] = request.params['origin']
@@ -283,8 +283,8 @@ module OmniAuth
         fail!(mocked_auth)
       else
         @env['omniauth.auth'] = mocked_auth
-        @env['omniauth.params'] = session.delete('omniauth.params') || {}
-        @env['omniauth.origin'] = session.delete('omniauth.origin')
+        @env['omniauth.params'] = OmniAuth.config.request_store.new(env).delete('omniauth.params') || {}
+        @env['omniauth.origin'] = OmniAuth.config.request_store.new(env).delete('omniauth.origin')
         @env['omniauth.origin'] = nil if env['omniauth.origin'] == ''
         OmniAuth.config.before_callback_phase.call(@env) if OmniAuth.config.before_callback_phase
         call_app!
